@@ -5,9 +5,31 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #0e0e0e;
 }
-
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 0 auto;
+  max-width: 95vw;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+label[for],
+button,
+input,
+select {
+  cursor: pointer;
+}
+
+label[for]:disabled,
+button:disabled,
+input:disabled,
+select:disabled {
+  cursor: initial;
 }
