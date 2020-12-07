@@ -24,3 +24,4 @@ Select.propTypes = {
   hasEmptyValue: PropTypes.bool,
   multi: PropTypes.bool,
 };
+export default Select;
