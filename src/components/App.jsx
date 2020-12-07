@@ -16,7 +16,13 @@ function App() {
     }
     fetchData();
   },[posts])
-  return <div></div>;
+  return <div>
+    <ul>
+    {posts.length>0?
+    posts?.map(post=><>{JSON.stringify(post)}</>):
+    <li>No Posts</li>}
+    </ul>
+  </div>;
 }
 
 export default App;
