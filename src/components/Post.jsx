@@ -1,6 +1,6 @@
-import { formatDateString } from "../helpers/formatters";
+import { formatDateString } from '../helpers/formatters';
 
-const Post = ({post}) => (
+const Post = ({ post }) => (
   <li>
     <h2>{post.title}</h2>
     <div>
@@ -21,10 +21,11 @@ const Post = ({post}) => (
     <ul>
       {post.categories?.map((category) => (
         <li key={category.id}>
-          <a href={`posts?categoryId=${category.id}`}>{category.name}</a>
+          <button value={category.id}>{category.name}</button>
         </li>
       ))}
     </ul>
+    <a href="">read more</a>
   </li>
 );
 export default Post;
