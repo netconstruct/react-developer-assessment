@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
-import { formatDateString, getCategoriesFromData } from '../helpers/formatters';
-import Select from './Select';
 import * as chunk from 'lodash.chunk';
 import { nanoid } from 'nanoid';
+import { useEffect, useState } from 'react';
+import { formatDateString, getCategoriesFromData } from '../helpers/formatters';
 import MultiSelect from './MultiSelect';
 const getData = async () =>
   await fetch('/api/posts').then((response) => response.json());
@@ -13,7 +12,6 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedCategories, setSelectedCategories] = useState([]);
   const chunkSize = window.innerWidth >= 550 ? 10 : 5;
   useEffect(() => {
@@ -45,26 +43,19 @@ function App() {
         <div>
           {/* TODO: Add functionality */}
           <label htmlFor="categorySelect">Categories</label>
-          <Select
-            options={categories}
-            id="categorySelect"
-            value={selectedCategory}
-            onChange={(evt) => {
-              setSelectedCategory(evt.target.value);
-            }}
-          />
           <MultiSelect
+            id="categorySelect"
             options={categories}
             onChange={(evt) => {
-              const {value} = evt.currentTarget 
+              const { value } = evt.currentTarget;
               const currentVals = selectedCategories;
               const newVals = new Set(currentVals);
-              if(newVals.has(value)){
-                newVals.delete(value)
-              }else{
-                newVals.add(value)
+              if (newVals.has(value)) {
+                newVals.delete(value);
+              } else {
+                newVals.add(value);
               }
-              setSelectedCategories([...newVals])
+              setSelectedCategories([...newVals]);
             }}
             values={selectedCategories}
           />
