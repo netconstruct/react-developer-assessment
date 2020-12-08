@@ -32,4 +32,8 @@ button:disabled,
 input:disabled,
 select:disabled {
   cursor: initial;
+  transition: opacity .4s ease;
+}
+*:disabled{
+  opacity: .8;
 }
