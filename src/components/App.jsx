@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { getCategoriesFromData } from '../helpers/formatters';
@@ -33,7 +32,7 @@ function App() {
     fetchData();
     const updatedCategories = getCategoriesFromData(data).map((category) => ({
       label: category,
-      id: nanoid(),
+      id:category.split(/ /g).join('_'),
     }));
     setCategories(updatedCategories);
   }, [data]);
