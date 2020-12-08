@@ -1,5 +1,7 @@
 // import React from 'react'
 
+import * as chunk from 'lodash.chunk';
+import { useEffect, useState } from 'react';
 import MultiSelect from './MultiSelect';
 import PostList from './PostList';
 
@@ -10,29 +12,37 @@ const PostsPage = ({
   onChangeFilters,
   currentFilters,
   loadingStatus,
-}) => (
-  <>
-    <div>
-      {/* TODO: Add filter functionality */}
-      <label htmlFor="categorySelect">Categories</label>
-      <MultiSelect
-        id="categorySelect"
-        options={categories}
-        onChange={onChangeFilters}
-        values={currentFilters}
-      />
-    </div>
-    <section id="posts">
-      {/* StatusWrapper.jsx */}
-      {loadingStatus !== 'loading' ? (
-        <PostList posts={posts} />
-      ) : loadingStatus === 'loading' ? (
-        <div>LoadingSpinner component</div>
-      ) : (
-        loadingStatus === 'error' && <div>ErrorMessage component</div>
-      )}
-      {/* Pagination.jsx */}
-      {/* <div>
+}) => {
+  const chunkSize = window.innerWidth >= 550 ? 10 : 5;
+  const [chunkedPosts, setChunkedPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  useEffect(() => {
+    const updatedChunks = chunk(posts, chunkSize);
+    setChunkedPosts(updatedChunks[currentPage]);
+  }, [currentPage, posts, chunkSize]);
+  return (
+    <>
+      <div>
+        {/* TODO: Add filter functionality */}
+        <label htmlFor="categorySelect">Categories</label>
+        <MultiSelect
+          id="categorySelect"
+          options={categories}
+          onChange={onChangeFilters}
+          values={currentFilters}
+        />
+      </div>
+      <section id="posts">
+        {/* StatusWrapper.jsx */}
+        {loadingStatus !== 'loading' ? (
+          <PostList posts={chunkedPosts} />
+        ) : loadingStatus === 'loading' ? (
+          <div>LoadingSpinner component</div>
+        ) : (
+          loadingStatus === 'error' && <div>ErrorMessage component</div>
+        )}
+        {/* Pagination.jsx */}
+        <div>
         <button
           onClick={() => setCurrentPage((prev) => prev - 1)}
           disabled={currentPage === 0}
@@ -41,16 +51,17 @@ const PostsPage = ({
         </button>
         <p>
           {currentPage >= 1 ? currentPage * chunkSize : currentPage + 1}-
-          {(currentPage + 1) * chunkSize} of {data.length}
+          {(currentPage + 1) * chunkSize} of {posts.length}
         </p>
         <button
           onClick={() => setCurrentPage((prev) => prev + 1)}
-          disabled={(currentPage + 1) * chunkSize === data.length}
+          disabled={(currentPage + 1) * chunkSize === posts.length}
         >
           Next
         </button>
-      </div> */}
-    </section>
-  </>
-);
+      </div>
+      </section>
+    </>
+  );
+};
 export default PostsPage;
