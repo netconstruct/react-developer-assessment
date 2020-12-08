@@ -3,12 +3,11 @@ import { formatDateString } from '../helpers/formatters';
 import AuthorLabel from './AuthorLabel';
 import CategoriesList from './CategoriesList';
 
-const Post = ({ post, isDetail }) => {
-  function handleItemClick(evt) {}
-  return (
+const Post = ({ post, isDetail }) =>  (
     <Wrapper isDetail={isDetail}>
       <div>
         <h2>{post.title}</h2>
+        <AuthorLabel name={post.author.name} avatar={post.author.avatar} />
         <div>
           <p>
             {post.summary
@@ -22,14 +21,10 @@ const Post = ({ post, isDetail }) => {
             {!isDetail && post.summary.length > 130 && '...'}
           </p>
         </div>
-        <AuthorLabel name={post.author.name} avatar={post.author.avatar} />
         <div>
           <p>{formatDateString(post.publishDate)}</p>
         </div>
-        <CategoriesList
-          categories={post.categories}
-          onClickItem={handleItemClick}
-        />
+        <CategoriesList categories={post.categories} />
         {isDetail ? (
           <Link to="/">Back To Posts</Link>
         ) : (
@@ -38,9 +33,7 @@ const Post = ({ post, isDetail }) => {
       </div>
     </Wrapper>
   );
-};
 
-const Wrapper = ({children,isDetail})=>(
-    isDetail?children:<li>{children}</li>
-)
+const Wrapper = ({ children, isDetail }) =>
+  isDetail ? <section id="post">{children}</section> : <li>{children}</li>;
 export default Post;
