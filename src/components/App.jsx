@@ -3,9 +3,8 @@ import { nanoid } from 'nanoid';
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { getCategoriesFromData } from '../helpers/formatters';
-import MultiSelect from './MultiSelect';
-import Post from './Post';
-import PostList from './PostList';
+import PostDetailPage from './PostDetailPage';
+import PostsPage from './PostsPage';
 const getData = async () =>
   await fetch('/api/posts').then((response) => response.json());
 
@@ -53,59 +52,28 @@ function App() {
         <h1>Posts</h1>
       </header>
       <main>
-        <Route>
-          <div>
-            {/* TODO: Add functionality */}
-            <label htmlFor="categorySelect">Categories</label>
-            <MultiSelect
-              id="categorySelect"
-              options={categories}
-              onChange={(evt) => {
-                const { value } = evt.currentTarget;
-                const currentVals = selectedCategories;
-                const newVals = new Set(currentVals);
-                if (newVals.has(value)) {
-                  newVals.delete(value);
-                } else {
-                  newVals.add(value);
-                }
-                setSelectedCategories([...newVals]);
-              }}
-              values={selectedCategories}
-            />
-          </div>
-          <section id="posts">
-            {loadingStatus !== 'loading' ? (
-              <PostList posts={posts} />
-            ) : loadingStatus === 'loading' ? (
-              <div>LoadingSpinner component</div>
-            ) : (
-              loadingStatus === 'error' && <div>ErrorMessage component</div>
-            )}
-            {/* Pagination.jsx */}
-            <div>
-              <button
-                onClick={() => setCurrentPage((prev) => prev - 1)}
-                disabled={currentPage === 0}
-              >
-                Prev
-              </button>
-              <p>
-                {currentPage >= 1 ? currentPage * chunkSize : currentPage + 1}-
-                {(currentPage + 1) * chunkSize} of {data.length}
-              </p>
-              <button
-                onClick={() => setCurrentPage((prev) => prev + 1)}
-                disabled={(currentPage + 1) * chunkSize === data.length}
-              >
-                Next
-              </button>
-            </div>
-          </section>
+        <Route exact path={['', '/posts']}>
+          <PostsPage
+            posts={posts}
+            categories={categories}
+            loadingStatus={loadingStatus}
+            onChangeFilters={(evt) => {
+              const { value } = evt.currentTarget;
+              const currentVals = selectedCategories;
+              const newVals = new Set(currentVals);
+              if (newVals.has(value)) {
+                newVals.delete(value);
+              } else {
+                newVals.add(value);
+              }
+              setSelectedCategories([...newVals]);
+            }}
+            selectedFilters={selectedCategories}
+          />
         </Route>
-        <Route exact path='/post/:postId'>
-<Post />
-          </Route>
+        <Route path="/post/:postId">
+          <PostDetailPage posts={posts} />
+        </Route>
       </main>
       <footer>GeorgeWL</footer>
     </Router>
