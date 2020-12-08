@@ -1,8 +1,7 @@
-// import React from 'react'
-// import styles from '../styles/authorLabel.module.scss'
+import styles from '../styles/authorLabel.module.scss'
 const AuthorLabel = ({ name, avatar }) => (
-  <div>
-    <img src={avatar} aria-hidden="true" alt="avatar" />
+  <div className={styles.wrapper}>
+    <img src={avatar} aria-hidden="true" alt="avatar" className={styles.avatar}/>
     <strong>{name}</strong>
   </div>
 );

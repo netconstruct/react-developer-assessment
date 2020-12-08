@@ -1,0 +1,14 @@
+.wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 32px;
+}
+.avatar{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border:1px solid #aeaeae;
+    margin: 0 5px;
+}
