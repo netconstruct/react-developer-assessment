@@ -1,7 +1,7 @@
 import * as chunk from 'lodash.chunk';
 import { nanoid } from 'nanoid';
 import { useEffect, useState } from 'react';
-import { formatDateString, getCategoriesFromData } from '../helpers/formatters';
+import { getCategoriesFromData } from '../helpers/formatters';
 import MultiSelect from './MultiSelect';
 import PostList from './PostList';
 const getData = async () =>
