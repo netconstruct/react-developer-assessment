@@ -25,7 +25,7 @@ const Post = ({ post }) => (
         </li>
       ))}
     </ul>
-    <a href="">read more</a>
+    <a href={`/post/${post.id}`}>Read more</a>
   </li>
 );
 export default Post;
