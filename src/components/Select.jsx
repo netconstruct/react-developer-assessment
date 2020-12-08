@@ -4,14 +4,13 @@ const Select = ({
   onChange,
   value,
   hasEmptyValue = true,
-  multi = false,
   id='selectInput'
 }) => (
-  <select id={id} onChange={onChange} value={value} multi={multi}>
+  <select id={id} onChange={onChange} value={value}>
     {hasEmptyValue && <option disabled={true}>Please Select</option>}
-    {options?.map((opt) => {
-      <option key={opt.value} value={opt.value}>{opt.label}</option>;
-    })}
+    {options?.map((opt) =>(
+      <option key={opt.value} value={opt.value}>{opt.label}</option>
+    ))}
   </select>
 );
 Select.propTypes = {
