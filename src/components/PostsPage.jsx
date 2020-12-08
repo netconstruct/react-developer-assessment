@@ -19,7 +19,7 @@ const PostsPage = ({
     if (loadingStatus === 'loaded') {
       const updatedWithCategories = posts?.map((post) => ({
         ...post,
-        categories: categories.map((category) => ({
+        categories: post.categories.map((category) => ({
           ...category,
           value: category?.label?.split(/ /g).join('_'),
         })),
@@ -44,6 +44,8 @@ const PostsPage = ({
         post.categories.some((cat) => filters?.includes(cat.value))
       );
       setFiteredPosts(updatedPosts)
+    }else if(filters.length===0){
+        setFiteredPosts(posts)
     }
   }, [location.search]);
   return (
