@@ -1,6 +1,6 @@
 import Post from './Post';
 
-const PostList = ({ posts, isLoading, isError }) => (
+const PostList = ({ posts }) => (
   <ul>
     {posts?.length > 0 ? (
       posts
