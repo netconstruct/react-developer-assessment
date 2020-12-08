@@ -10,6 +10,7 @@ const getData = async () =>
 function App() {
   // TODO: This is getting messy, convert to a much cleaner useReducer
   const [data, setData] = useState([]);
+  const [loadingStatus, setLoadingStatus] = useState('loading');
   const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -18,10 +19,19 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       if (data?.length <= 0) {
-        const response = await getData().catch((err) =>
-          console.error('Failed to Fetch', err)
-        );
-        setData(response.posts);
+        await getData()
+          .then((response) => {
+            // fake slow connection
+            setTimeout(()=>{
+
+              setLoadingStatus('loaded');
+              setData(response.posts);
+            },1000)
+          })
+          .catch((err) => {
+            setLoadingStatus('error');
+            console.error('Failed to Fetch', err);
+          });
       }
     }
     fetchData();
@@ -63,7 +73,13 @@ function App() {
           />
         </div>
         <section id="posts">
-          <PostList posts={posts} />
+          {loadingStatus !== 'loading' ? (
+            <PostList posts={posts} />
+          ) : loadingStatus === 'loading' ? (
+            <div>LoadingSpinner component</div>
+          ) : (
+            loadingStatus === 'error' && <div>ErrorMessage component</div>
+          )}
           {/* Pagination.jsx */}
           <div>
             <button
