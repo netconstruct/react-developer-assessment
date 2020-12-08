@@ -37,9 +37,10 @@ function App() {
   // TODO: Split this into sub-components
   return (
     <>
-      <header></header>
-      <main>
+      <header>
         <h1>Posts</h1>
+      </header>
+      <main>
         <div>
           {/* TODO: Add functionality */}
           <label htmlFor="categorySelect">Categories</label>
