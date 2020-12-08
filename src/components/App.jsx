@@ -37,8 +37,17 @@ function App() {
     }));
     setCategories(updatedCategories);
   }, [data]);
-
-  // TODO: Split this into sub-components
+  function handleCategoryChange(evt) {
+    const { value } = evt.currentTarget;
+    const currentVals = selectedCategories;
+    const newVals = new Set(currentVals);
+    if (newVals.has(value)) {
+      newVals.delete(value);
+    } else {
+      newVals.add(value);
+    }
+    setSelectedCategories([...newVals]);
+  }
   return (
     <Router>
       <header>
@@ -50,17 +59,7 @@ function App() {
             posts={data}
             categories={categories}
             loadingStatus={loadingStatus}
-            onChangeFilters={(evt) => {
-              const { value } = evt.currentTarget;
-              const currentVals = selectedCategories;
-              const newVals = new Set(currentVals);
-              if (newVals.has(value)) {
-                newVals.delete(value);
-              } else {
-                newVals.add(value);
-              }
-              setSelectedCategories([...newVals]);
-            }}
+            onChangeFilters={handleCategoryChange}
             selectedFilters={selectedCategories}
           />
         </Route>
