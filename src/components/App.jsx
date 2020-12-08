@@ -3,6 +3,7 @@ import { formatDateString, getCategoriesFromData } from '../helpers/formatters';
 import Select from './Select';
 import * as chunk from 'lodash.chunk';
 import { nanoid } from 'nanoid';
+import MultiSelect from './MultiSelect';
 const getData = async () =>
   await fetch('/api/posts').then((response) => response.json());
 
@@ -10,7 +11,10 @@ function App() {
   // TODO: This is getting messy, convert to a much cleaner useReducer
   const [data, setData] = useState([]);
   const [posts, setPosts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const chunkSize = window.innerWidth >= 550 ? 10 : 5;
   useEffect(() => {
     async function fetchData() {
@@ -22,15 +26,16 @@ function App() {
       }
     }
     fetchData();
+    const updatedCategories = getCategoriesFromData(data).map((category) => ({
+      label: category,
+      id: nanoid(),
+    }));
+    setCategories(updatedCategories);
   }, [data]);
   useEffect(() => {
     const chunkedPosts = chunk(data, chunkSize);
     setPosts(chunkedPosts[currentPage]);
   }, [currentPage, data, chunkSize]);
-  const categories = getCategoriesFromData(data).map((category) => ({
-    label: category,
-    value: nanoid(),
-  }));
   // TODO: Split this into sub-components
   return (
     <>
@@ -39,15 +44,39 @@ function App() {
         <h1>Posts</h1>
         <div>
           {/* TODO: Add functionality */}
-          <label htmlFor="categorySelect">Category</label>
-          <Select options={categories} id="categorySelect" />
+          <label htmlFor="categorySelect">Categories</label>
+          <Select
+            options={categories}
+            id="categorySelect"
+            value={selectedCategory}
+            onChange={(evt) => {
+              setSelectedCategory(evt.target.value);
+            }}
+          />
+          <MultiSelect
+            options={categories}
+            onChange={(evt) => {
+              const {value} = evt.currentTarget 
+              const currentVals = selectedCategories;
+              const newVals = new Set(currentVals);
+              if(newVals.has(value)){
+                newVals.delete(value)
+              }else{
+                newVals.add(value)
+              }
+              setSelectedCategories([...newVals])
+            }}
+            values={selectedCategories}
+          />
         </div>
         <section id="posts">
           <ul>
+            {/* PostList.js */}
             {posts?.length > 0 ? (
               posts?.map((post) => {
                 const parsedDate = formatDateString(post.publishDate);
                 return (
+                  // Post.js
                   <li key={post.id}>
                     <h2>{post.title}</h2>
                     <div>
@@ -90,6 +119,7 @@ function App() {
               <li>No Posts</li>
             )}
           </ul>
+          {/* Pagination.jsx */}
           <div>
             <button
               onClick={() => setCurrentPage((prev) => prev - 1)}

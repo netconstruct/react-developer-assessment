@@ -4,22 +4,28 @@ const Select = ({
   onChange,
   value,
   hasEmptyValue = true,
-  id='selectInput'
+  id = 'selectInput',
 }) => (
   <select id={id} onChange={onChange} value={value}>
-    {hasEmptyValue && <option disabled={true}>Please Select</option>}
-    {options?.map((opt) =>(
-      <option key={opt.value} value={opt.value}>{opt.label}</option>
+    {hasEmptyValue && (
+      <option disabled={true} value="">
+        Please Select
+      </option>
+    )}
+    {options?.map((opt) => (
+      <option key={opt.id} value={opt.id}>
+        {opt.label}
+      </option>
     ))}
   </select>
 );
 Select.propTypes = {
   options: PropTypes.arrayOf(
-    PropTypes.shape({ label: PropTypes.node, value: PropTypes.string })
+    PropTypes.shape({ label: PropTypes.node, id: PropTypes.string })
   ).isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
-  id:PropTypes.string,
+  id: PropTypes.string,
   hasEmptyValue: PropTypes.bool,
   multi: PropTypes.bool,
 };
