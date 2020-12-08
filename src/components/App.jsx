@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import { useEffect, useState } from 'react';
 import { formatDateString, getCategoriesFromData } from '../helpers/formatters';
 import MultiSelect from './MultiSelect';
+import PostList from './PostList';
 const getData = async () =>
   await fetch('/api/posts').then((response) => response.json());
 
@@ -62,61 +63,7 @@ function App() {
           />
         </div>
         <section id="posts">
-          <ul>
-            {/* PostList.js */}
-            {posts?.length > 0 ? (
-              posts
-                .sort(
-                  (prev, next) =>
-                  new Date(prev.publishDate).getTime()<
-                  new Date(next.publishDate).getTime() 
-                )
-                .map((post) => {
-                  const parsedDate = formatDateString(post.publishDate);
-                  return (
-                    // Post.js
-                    <li key={post.id}>
-                      <h2>{post.title}</h2>
-                      <div>
-                        <p>
-                          {post.summary
-                            .slice(
-                              0,
-                              post.summary.length > 130
-                                ? 130
-                                : post.summary.length
-                            )
-                            .trim()}
-                          {post.summary.length > 130 && '...'}
-                        </p>
-                      </div>
-                      <div>
-                        <img
-                          src={post.author.avatar}
-                          aria-hidden="true"
-                          alt="author avatar"
-                        />
-                        <strong>{post.author.name}</strong>
-                      </div>
-                      <div>
-                        <p>{parsedDate}</p>
-                      </div>
-                      <ul>
-                        {post.categories?.map((category) => (
-                          <li key={category.id}>
-                            <a href={`posts?categoryId=${category.id}`}>
-                              {category.name}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </li>
-                  );
-                })
-            ) : (
-              <li>No Posts</li>
-            )}
-          </ul>
+          <PostList posts={posts} />
           {/* Pagination.jsx */}
           <div>
             <button
