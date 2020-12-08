@@ -1,4 +1,3 @@
-import * as chunk from 'lodash.chunk';
 import { nanoid } from 'nanoid';
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -12,11 +11,8 @@ function App() {
   // TODO: This is getting messy, convert to a much cleaner useReducer
   const [data, setData] = useState([]);
   const [loadingStatus, setLoadingStatus] = useState('loading');
-  const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const chunkSize = window.innerWidth >= 550 ? 10 : 5;
   useEffect(() => {
     async function fetchData() {
       if (data?.length <= 0) {
@@ -41,10 +37,7 @@ function App() {
     }));
     setCategories(updatedCategories);
   }, [data]);
-  useEffect(() => {
-    const chunkedPosts = chunk(data, chunkSize);
-    setPosts(chunkedPosts[currentPage]);
-  }, [currentPage, data, chunkSize]);
+
   // TODO: Split this into sub-components
   return (
     <Router>
@@ -54,7 +47,7 @@ function App() {
       <main>
         <Route exact path={['', '/posts']}>
           <PostsPage
-            posts={posts}
+            posts={data}
             categories={categories}
             loadingStatus={loadingStatus}
             onChangeFilters={(evt) => {
@@ -72,7 +65,7 @@ function App() {
           />
         </Route>
         <Route path="/post/:postId">
-          <PostDetailPage posts={posts} />
+          <PostDetailPage posts={data} />
         </Route>
       </main>
       <footer>GeorgeWL</footer>
