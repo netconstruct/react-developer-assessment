@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Home from './pages/Home';
-import Details from './pages/Details';
-import { LoadingSpinner } from './styledComponents/LoadingSpinner';
+import Home from '../pages/Home';
+import Details from '../pages/Details';
+import { LoadingSpinner } from '../styledComponents/LoadingSpinner';
 
 const AppContainer = styled.div`
   display: flex;
