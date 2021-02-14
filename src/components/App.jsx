@@ -9,7 +9,9 @@ const AppContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  max-height: 100vh;
+  box-sizing: border-box;
+  overflow: auto;
 `;
 
 function App() {
