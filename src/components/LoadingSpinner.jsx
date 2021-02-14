@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 
-// As we may want to render the LoadingSpinner in multiple locations it is
-// declared in its own file which can be imported anywhere in the application
-export const LoadingSpinner = styled.div`
-  margin-top: -2.5rem;
+const Spinner = styled.div`
   width: 150px;
   height: 150px;
   animation: spin 0.8s linear infinite;
@@ -14,6 +11,8 @@ export const LoadingSpinner = styled.div`
   border-left-color: red;
   border-width: 5px;
   border-radius: 50%;
+  position: absolute;
+  right: 50%;
 
   @keyframes spin {
     0% {
@@ -24,3 +23,24 @@ export const LoadingSpinner = styled.div`
     }
   }
 `;
+
+const Backdrop = styled.div`
+  display: flex;
+  background-color: rgba(1, 1, 1, 0.3);
+  z-index: 2;
+  justify-content: center;
+  align-items: center;
+  min-width: 100vw;
+  min-height: 100vh;
+  position: absolute;
+`;
+
+function LoadingSpinner() {
+  return (
+    <Backdrop>
+      <Spinner />
+    </Backdrop>
+  );
+}
+
+export default LoadingSpinner;
