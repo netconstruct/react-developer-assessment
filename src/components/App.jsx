@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 function App() {
   const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     fetch('/api/posts')
@@ -12,10 +13,16 @@ function App() {
   return (
     <div>
       <ul>
-        {posts.map((post) => (
-          <li>{post.author.name}</li>
-        ))}
+        {posts.map((post, index) => {
+          if (index + 1 > page * 3) return null;
+
+          return <li key={post.id}> {post.author.name}</li>;
+        })}
       </ul>
+
+      <button type="button" onClick={() => setPage(page + 1)}>
+        Load More
+      </button>
     </div>
   );
 }
