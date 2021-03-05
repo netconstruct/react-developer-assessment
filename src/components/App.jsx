@@ -4,10 +4,12 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
 
+  // TODO: Improve error handling
   useEffect(() => {
     fetch('/api/posts')
       .then((response) => response.json())
-      .then((res) => setPosts(res.posts));
+      .then((res) => setPosts(res.posts))
+      .catch((e) => alert(e));
   }, []);
 
   return (
