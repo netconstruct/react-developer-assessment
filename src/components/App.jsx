@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
 
+import styles from '../styles/components/App.module.css';
+
+import Card from './Card';
+
 function App() {
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
@@ -55,33 +59,34 @@ function App() {
   }, [posts, activeCategories]);
 
   return (
-    <div>
-      <h1>POSTS</h1>
-      <ul>
-        {postsToDisplay.length}
-        {postsToDisplay.map((post, index) => {
-          if (index + 1 > page * POSTS_PER_PAGE) return null;
+    <div className={styles.appContainer}>
+      <main>
+        <h1>POSTS</h1>
+        <ul className={styles.postsContainer}>
+          {postsToDisplay.map((post, index) => {
+            if (index + 1 > page * POSTS_PER_PAGE) return null;
 
-          return <li key={post.id}> {post.author.name}</li>;
-        })}
-      </ul>
+            return <Card key={post.id} post={post} />;
+          })}
+        </ul>
 
-      <button type="button" onClick={() => setPage(page + 1)}>
-        Load More
-      </button>
+        <button type="button" onClick={() => setPage(page + 1)}>
+          Load More
+        </button>
 
-      <h1>CATEGORIES</h1>
-      <ul>
-        {categories.map((category) => {
-          return (
-            <li key={category}>
-              <button onClick={() => toggleCategory(category)}>
-                {category}
-              </button>
-            </li>
-          );
-        })}
-      </ul>
+        <h1>CATEGORIES</h1>
+        <ul className={styles.categoriesContainer}>
+          {categories.map((category) => {
+            return (
+              <li key={category}>
+                <button onClick={() => toggleCategory(category)}>
+                  {category}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </main>
     </div>
   );
 }
