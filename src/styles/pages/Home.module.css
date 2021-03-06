@@ -1,0 +1,41 @@
+.homeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 30px 20px 50px;
+  flex: 1;
+}
+
+.homeContainer > h1 {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.postsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
+  justify-items: center;
+  justify-content: space-evenly;
+  gap: 50px 30px;
+
+  width: 100%;
+  margin: 30px 0 50px;
+}
+
+.categoriesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+
+  width: 100%;
+  margin: 30px 0 60px;
+}
+
+@media (min-width: 800px) {
+  .homeContainer {
+    padding: 50px;
+    max-width: 1440px;
+  }
+}
