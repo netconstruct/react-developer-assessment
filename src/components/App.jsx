@@ -4,6 +4,7 @@ import styles from '../styles/components/App.module.css';
 
 import Navbar from './Navbar';
 import Card from './Card';
+import Footer from './Footer';
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -90,6 +91,8 @@ function App() {
           })}
         </ul>
       </main>
+
+      <Footer />
     </div>
   );
 }

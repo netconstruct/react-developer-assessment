@@ -1,0 +1,25 @@
+.footerContainer {
+  width: 100%;
+  height: 64px;
+  background-color: var(--highlight);
+}
+
+.footerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  max-width: 350px;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.footerContent span {
+  color: var(--secondary-text);
+}
+
+.footerContent span a {
+  color: var(--secondary-text);
+  font-weight: 600;
+  text-decoration: none;
+}
