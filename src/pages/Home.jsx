@@ -6,6 +6,7 @@ import { PostContext } from '../contexts/PostsContext';
 import Tag from '../components/Tag';
 import Card from '../components/Card';
 import Button from '../components/Button';
+import { Link } from 'react-router-dom';
 
 function Home() {
   const {
@@ -40,7 +41,11 @@ function Home() {
         {postsToDisplay.map((post, index) => {
           if (index + 1 > page * POSTS_PER_PAGE) return null;
 
-          return <Card key={post.id} post={post} />;
+          return (
+            <Link key={post.id} to={`/details/${post.id}`}>
+              <Card post={post} />
+            </Link>
+          );
         })}
       </ul>
 
