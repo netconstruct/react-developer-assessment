@@ -10,12 +10,12 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 30px 20px;
+  padding: 30px 20px 50px;
   flex: 1;
 }
 
 .appContainer > main > h1 {
-  font-size: 36px;
+  font-size: 30px;
   font-weight: 700;
 }
 
@@ -27,7 +27,7 @@
   gap: 50px 30px;
 
   width: 100%;
-  margin: 50px 0;
+  margin: 30px 0 50px;
 }
 
 .categoriesContainer {
@@ -37,11 +37,11 @@
   gap: 12px;
 
   width: 100%;
-  margin: 50px 0;
+  margin: 30px 0 60px;
 }
 
 @media (min-width: 800px) {
   .appContainer > main {
-    padding: 50px;
+    padding: 50px 80px;
   }
 }

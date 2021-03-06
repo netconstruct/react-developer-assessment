@@ -35,7 +35,7 @@ function App() {
       })
     );
 
-    return categoriesNamesArr;
+    return categoriesNamesArr.sort();
   }
 
   function toggleCategory(category) {
