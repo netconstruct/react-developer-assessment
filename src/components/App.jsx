@@ -4,16 +4,20 @@ import styles from '../styles/components/App.module.css';
 
 import Navbar from './Navbar';
 import Card from './Card';
+import Button from './Button';
 import Footer from './Footer';
+import Tag from './Tag';
 
 function App() {
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
   const [categories, setCategories] = useState([]);
   const [postsToDisplay, setPostsToDisplay] = useState([]);
-  const [activeCategories, setActiveCategories] = useState([]);
+  const [activeCategories, setActiveCategories] = useState([
+    'Digital Marketing',
+  ]);
 
-  const POSTS_PER_PAGE = 3;
+  const POSTS_PER_PAGE = 6;
 
   function filterByCategory(postList, categoriesArr) {
     if (categoriesArr.length === 0) return postList;
@@ -65,7 +69,22 @@ function App() {
       <Navbar />
 
       <main>
-        <h1>POSTS</h1>
+        <h1>Categories</h1>
+        <ul className={styles.categoriesContainer}>
+          {categories.map((category) => {
+            return (
+              <li key={category}>
+                <Tag
+                  isActive={activeCategories.includes(category)}
+                  text={category}
+                  onClick={() => toggleCategory(category)}
+                />
+              </li>
+            );
+          })}
+        </ul>
+
+        <h1>Posts</h1>
         <ul className={styles.postsContainer}>
           {postsToDisplay.map((post, index) => {
             if (index + 1 > page * POSTS_PER_PAGE) return null;
@@ -74,22 +93,7 @@ function App() {
           })}
         </ul>
 
-        <button type="button" onClick={() => setPage(page + 1)}>
-          Load More
-        </button>
-
-        <h1>CATEGORIES</h1>
-        <ul className={styles.categoriesContainer}>
-          {categories.map((category) => {
-            return (
-              <li key={category}>
-                <button onClick={() => toggleCategory(category)}>
-                  {category}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+        <Button text="Load More" onClick={() => setPage(page + 1)} />
       </main>
 
       <Footer />
