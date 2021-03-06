@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import styles from '../styles/components/App.module.css';
 
+import Navbar from './Navbar';
 import Card from './Card';
 
 function App() {
@@ -60,6 +61,8 @@ function App() {
 
   return (
     <div className={styles.appContainer}>
+      <Navbar />
+
       <main>
         <h1>POSTS</h1>
         <ul className={styles.postsContainer}>
