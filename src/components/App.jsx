@@ -13,9 +13,7 @@ function App() {
   const [page, setPage] = useState(1);
   const [categories, setCategories] = useState([]);
   const [postsToDisplay, setPostsToDisplay] = useState([]);
-  const [activeCategories, setActiveCategories] = useState([
-    'Digital Marketing',
-  ]);
+  const [activeCategories, setActiveCategories] = useState([]);
 
   const POSTS_PER_PAGE = 6;
 
@@ -93,7 +91,9 @@ function App() {
           })}
         </ul>
 
-        <Button text="Load More" onClick={() => setPage(page + 1)} />
+        {postsToDisplay.length > page * POSTS_PER_PAGE && (
+          <Button text="Load More" onClick={() => setPage(page + 1)} />
+        )}
       </main>
 
       <Footer />
