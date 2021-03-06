@@ -14,7 +14,7 @@
 
 .postsContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 350px));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
   justify-items: center;
   justify-content: space-evenly;
   gap: 50px 30px;
@@ -34,7 +34,8 @@
 }
 
 @media (min-width: 800px) {
-  .appContainer > main {
-    padding: 50px 80px;
+  .homeContainer {
+    padding: 50px;
+    max-width: 1440px;
   }
 }

@@ -9,7 +9,7 @@ export function ContextProvider({ children }) {
   const [categories, setCategories] = useState([]);
   const [activeCategories, setActiveCategories] = useState([]);
 
-  const POSTS_PER_PAGE = 6;
+  const POSTS_PER_PAGE = 8;
 
   function getAllCategories(postList) {
     const categoriesNamesArr = [];
