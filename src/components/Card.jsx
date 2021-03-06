@@ -1,9 +1,11 @@
 import React from 'react';
+import { format } from 'date-fns';
 
 import styles from '../styles/components/Card.module.css';
 
 function Card({ post }) {
   const { title, summary, publishDate, author } = post;
+  const formattedDate = format(new Date(publishDate), 'MMMM dd, yyyy');
 
   return (
     <li className={styles.card}>
@@ -15,7 +17,7 @@ function Card({ post }) {
       <footer>
         <div>
           <p>{author.name}</p>
-          <span>{publishDate}</span>
+          <span>{formattedDate}</span>
         </div>
         <img src={author.avatar} alt="Author Avatar" />
       </footer>
