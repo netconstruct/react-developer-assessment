@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from '../styles/components/Tag.module.css';
+import styles from '../styles/components/Tag.module.scss';
 
 function Tag({ text, isActive, isSmall, onClick }) {
   return (

@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { PostContext } from '../contexts/PostsContext';
-import styles from '../styles/pages/Home.module.css';
+import styles from '../styles/pages/Home.module.scss';
 
 import Tag from '../components/Tag';
 import Card from '../components/Card';

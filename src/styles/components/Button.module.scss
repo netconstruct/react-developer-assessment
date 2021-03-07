@@ -1,0 +1,44 @@
+.button {
+  font-family: 'Blinker';
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  padding: 0;
+  background: 0;
+  border: 0;
+  outline: 0;
+
+  cursor: pointer;
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    background-color: var(--secondary-background);
+    transform: scaleX(0.5);
+
+    transition: 0.2s;
+  }
+
+  &::before {
+    transform: scaleX(0);
+    top: -5px;
+    left: 0;
+  }
+
+  &::after {
+    bottom: -7px;
+    left: 0;
+  }
+
+  &:hover {
+    &::before,
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+}
