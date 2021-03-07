@@ -15,7 +15,6 @@
 .postsContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
-  justify-items: center;
   justify-content: space-evenly;
   gap: 50px 30px;
 

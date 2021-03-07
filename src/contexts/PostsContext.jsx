@@ -64,9 +64,22 @@ export function ContextProvider({ children }) {
     if (activeCategories.length === 0) return setPostsToDisplay(posts);
 
     // Will show a post if it has at least one of the selected categories
+    // setPostsToDisplay(
+    //   posts.filter(({ categories }) =>
+    //     categories.some((category) => activeCategories.includes(category.name))
+    //   )
+    // );
+
+    // Will show a post only if it has all of the selected categories
     setPostsToDisplay(
       posts.filter(({ categories }) =>
-        categories.some((category) => activeCategories.includes(category.name))
+        activeCategories.every((activeCategory) => {
+          let bool = categories.reduce(
+            (total, category) => category.name === activeCategory || total,
+            false
+          );
+          return bool;
+        })
       )
     );
   }, [posts, activeCategories]);
@@ -74,6 +87,7 @@ export function ContextProvider({ children }) {
   return (
     <PostContext.Provider
       value={{
+        totalNumberOfPosts: posts.length,
         postsToDisplay,
         page,
         incrementPage,

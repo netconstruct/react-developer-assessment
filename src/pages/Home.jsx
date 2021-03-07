@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 
 function Home() {
   const {
+    totalNumberOfPosts,
     postsToDisplay,
     page,
     categories,
@@ -36,7 +37,9 @@ function Home() {
         })}
       </ul>
 
-      <h1>Posts</h1>
+      <h1>
+        Posts ({postsToDisplay.length} / {totalNumberOfPosts})
+      </h1>
       <ul className={styles.postsContainer}>
         {postsToDisplay.map((post, index) => {
           if (index + 1 > page * POSTS_PER_PAGE) return null;
