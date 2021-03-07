@@ -2,16 +2,10 @@ import { format } from 'date-fns';
 
 import styles from '../styles/components/Card.module.scss';
 
+import { PostI } from '../contexts/PostsContext';
+
 interface CardI {
-  post: {
-    title: string;
-    summary: string;
-    publishDate: string;
-    author: {
-      name: string;
-      avatar: string;
-    };
-  };
+  post: PostI;
 }
 
 function Card({ post }: CardI) {

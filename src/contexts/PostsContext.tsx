@@ -1,36 +1,59 @@
-import React, { createContext, useEffect, useState } from 'react';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 import { useQueryState } from 'react-router-use-location-state';
 
-export const PostContext = createContext({});
+interface PostsContextDataI {
+  appStatus: string;
+  totalNumberOfPosts: number;
+  postsToDisplay: any;
+  page: number;
+  incrementPage: () => void;
+  categories: any;
+  activeCategories: any;
+  toggleCategory: (arg0: string) => any;
+  POSTS_PER_PAGE: number;
+}
 
-export function ContextProvider({ children }) {
+interface ContextProviderI {
+  children: ReactNode;
+}
+
+export interface PostI {
+  id: string;
+  title: string;
+  publishDate: string;
+  author: {
+    name: string;
+    avatar: string;
+  };
+  summary: string;
+  categories: Array<CategoryI>;
+}
+
+interface CategoryI {
+  id: string;
+  name: string;
+}
+
+export const PostContext = createContext({} as PostsContextDataI);
+
+export function ContextProvider({ children }: ContextProviderI) {
   // As the amount of states grow, these states would ideally be refactored into a reducer
-  const [posts, setPosts] = useState([]);
-  const [postsToDisplay, setPostsToDisplay] = useState([]);
-  const [page, setPage] = useState(1);
-  const [categories, setCategories] = useState([]);
-  const [activeCategories, setActiveCategories] = useState([]);
-  const [appStatus, setAppStatus] = useState('LOADING');
+  const [posts, setPosts] = useState<PostI[]>([]);
+  const [postsToDisplay, setPostsToDisplay] = useState<PostI[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [activeCategories, setActiveCategories] = useState<string[]>([]);
+  const [appStatus, setAppStatus] = useState<string>('LOADING');
 
   const POSTS_PER_PAGE = 8;
 
-  const [, setQueryStringActiveCategories] = useQueryState('categories', []);
-
-  function getAllCategories(postList) {
-    const categoriesNamesArr = [];
-    postList.map((post) =>
-      post.categories.map(({ name }) => {
-        if (categoriesNamesArr.indexOf(name) === -1)
-          categoriesNamesArr.push(name);
-        return null;
-      })
-    );
-
-    return categoriesNamesArr.sort();
-  }
+  const [, setQueryStringActiveCategories] = useQueryState<string[]>(
+    'categories',
+    []
+  );
 
   // Used to turn on/off the filter for selected category
-  function toggleCategory(category) {
+  function toggleCategory(category: string) {
     // If the selected category is not listed in activeCategories, add it
     if (!activeCategories.includes(category)) {
       // Also adds it to URL query string
@@ -69,20 +92,22 @@ export function ContextProvider({ children }) {
 
   // Maps through all data and get every available category
   useEffect(() => {
-    setCategories(getAllCategories(posts));
+    const categoriesNamesArr: string[] = [];
+    posts.map((post) =>
+      post.categories.map(({ name }) => {
+        if (categoriesNamesArr.indexOf(name) === -1)
+          categoriesNamesArr.push(name);
+        return null;
+      })
+    );
+
+    setCategories(categoriesNamesArr.sort());
   }, [posts]);
 
   // Filter posts according to the active categories
   useEffect(() => {
     // If no category is active, display all posts
     if (activeCategories.length === 0) return setPostsToDisplay(posts);
-
-    // Will show a post if it has at least one of the selected categories
-    // setPostsToDisplay(
-    //   posts.filter(({ categories }) =>
-    //     categories.some((category) => activeCategories.includes(category.name))
-    //   )
-    // );
 
     // Will show a post only if it has all of the selected categories
     setPostsToDisplay(
