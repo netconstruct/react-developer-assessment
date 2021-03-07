@@ -12,14 +12,14 @@
   max-width: 350px;
   height: 100%;
   margin: 0 auto;
-}
 
-.footerContent span {
-  color: var(--secondary-text);
-}
+  span {
+    color: var(--secondary-text);
 
-.footerContent span a {
-  color: var(--secondary-text);
-  font-weight: 600;
-  text-decoration: none;
+    a {
+      color: var(--secondary-text);
+      font-weight: 600;
+      text-decoration: none;
+    }
+  }
 }

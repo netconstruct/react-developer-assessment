@@ -1,6 +1,6 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import styles from '../styles/components/App.module.css';
+import styles from '../styles/components/App.module.scss';
 import { ContextProvider } from '../contexts/PostsContext';
 
 import Navbar from './Navbar';
