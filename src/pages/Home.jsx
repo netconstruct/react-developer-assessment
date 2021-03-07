@@ -8,7 +8,11 @@ import styles from '../styles/pages/Home.module.css';
 import Tag from '../components/Tag';
 import Card from '../components/Card';
 import Button from '../components/Button';
-import { pageTransition } from '../assets/utils/animationVariants';
+import {
+  container,
+  item,
+  pageTransition,
+} from '../assets/utils/animationVariants';
 
 function Home() {
   const {
@@ -31,34 +35,46 @@ function Home() {
       className={styles.homeContainer}
     >
       <h1>Categories</h1>
-      <ul className={styles.categoriesContainer}>
+      <motion.ul
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className={styles.categoriesContainer}
+      >
         {categories.map((category) => {
           return (
-            <li key={category}>
+            <motion.li variants={item} key={category}>
               <Tag
                 isActive={activeCategories.includes(category)}
                 text={category}
                 onClick={() => toggleCategory(category)}
               />
-            </li>
+            </motion.li>
           );
         })}
-      </ul>
+      </motion.ul>
 
       <h1>
         Posts ({postsToDisplay.length} / {totalNumberOfPosts})
       </h1>
-      <ul className={styles.postsContainer}>
+      <motion.ul
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className={styles.postsContainer}
+      >
         {postsToDisplay.map((post, index) => {
           if (index + 1 > page * POSTS_PER_PAGE) return null;
 
           return (
-            <Link key={post.id} to={`/details/${post.id}`}>
-              <Card post={post} />
-            </Link>
+            <motion.li key={post?.id} variants={item}>
+              <Link to={`/details/${post?.id}`}>
+                <Card post={post} />
+              </Link>
+            </motion.li>
           );
         })}
-      </ul>
+      </motion.ul>
 
       {postsToDisplay.length > page * POSTS_PER_PAGE && (
         <Button text="Load More" onClick={incrementPage} />

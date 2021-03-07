@@ -8,7 +8,7 @@ function Card({ post }) {
   const formattedDate = format(new Date(publishDate), 'MMMM dd, yyyy');
 
   return (
-    <li className={styles.card}>
+    <div className={styles.card}>
       <main>
         <h1 className={styles.title}>{title}</h1>
         <p>{summary}</p>
@@ -21,7 +21,7 @@ function Card({ post }) {
         </div>
         <img src={author.avatar} alt="Author Avatar" />
       </footer>
-    </li>
+    </div>
   );
 }
 

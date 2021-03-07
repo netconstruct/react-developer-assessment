@@ -17,7 +17,7 @@ function Details({ postId }) {
   const post = postsToDisplay.find((p) => p.id === postId);
   const postIndex = postsToDisplay.findIndex((p) => p.id === postId);
   const nextPostId =
-    postIndex < postsToDisplay.length + 1
+    postIndex < postsToDisplay.length - 1
       ? postsToDisplay[postIndex + 1].id
       : postsToDisplay[0].id;
 
