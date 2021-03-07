@@ -9,6 +9,8 @@ import ReactDOM from 'react-dom';
 import './mock';
 
 // Include styles.
+import './styles/reset.css';
+import './styles/globals.css';
 import './styles/index.css';
 
 // Include application component.

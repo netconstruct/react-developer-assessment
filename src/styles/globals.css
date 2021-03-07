@@ -1,0 +1,14 @@
+:root {
+  --primary-text: #000;
+  --primary-background: #fff;
+  --secondary-text: #fff;
+  --secondary-background: #000;
+
+  --highlight: #3bb599;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
