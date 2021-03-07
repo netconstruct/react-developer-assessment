@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
+import { useQueryState } from 'react-router-use-location-state';
 
 export const PostContext = createContext({});
 
@@ -11,6 +12,8 @@ export function ContextProvider({ children }) {
   const [activeCategories, setActiveCategories] = useState([]);
 
   const POSTS_PER_PAGE = 8;
+
+  const [, setQueryStringActiveCategories] = useQueryState('categories', []);
 
   function getAllCategories(postList) {
     const categoriesNamesArr = [];
@@ -28,13 +31,19 @@ export function ContextProvider({ children }) {
   // Used to turn on/off the filter for selected category
   function toggleCategory(category) {
     // If the selected category is not listed in activeCategories, add it
-    if (!activeCategories.includes(category))
+    if (!activeCategories.includes(category)) {
+      // Also adds it to URL query string
+      setQueryStringActiveCategories([...activeCategories, category]);
       return setActiveCategories([...activeCategories, category]);
+    }
 
     // Otherwise, remove said category from the array
     const categoryIndex = activeCategories.indexOf(category);
     const newActiveCategories = [...activeCategories];
     newActiveCategories.splice(categoryIndex, 1);
+
+    // Also removes it from URL query string
+    setQueryStringActiveCategories(newActiveCategories);
 
     return setActiveCategories(newActiveCategories);
   }
