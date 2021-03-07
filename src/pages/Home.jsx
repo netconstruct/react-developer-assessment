@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { PostContext } from '../contexts/PostsContext';
 import styles from '../styles/pages/Home.module.css';
@@ -57,24 +57,27 @@ function Home() {
       <h1>
         Posts ({postsToDisplay.length} / {totalNumberOfPosts})
       </h1>
-      <motion.ul
-        variants={container}
-        initial="hidden"
-        animate="show"
-        className={styles.postsContainer}
-      >
-        {postsToDisplay.map((post, index) => {
-          if (index + 1 > page * POSTS_PER_PAGE) return null;
+      <AnimatePresence exitBeforeEnter>
+        <motion.ul
+          variants={container}
+          initial="hidden"
+          animate="show"
+          exit="hidden"
+          className={styles.postsContainer}
+        >
+          {postsToDisplay.map((post, index) => {
+            if (index + 1 > page * POSTS_PER_PAGE) return null;
 
-          return (
-            <motion.li key={post?.id} variants={item}>
-              <Link to={`/details/${post?.id}`}>
-                <Card post={post} />
-              </Link>
-            </motion.li>
-          );
-        })}
-      </motion.ul>
+            return (
+              <motion.li variants={item} key={post?.id}>
+                <Link to={`/details/${post?.id}`}>
+                  <Card post={post} />
+                </Link>
+              </motion.li>
+            );
+          })}
+        </motion.ul>
+      </AnimatePresence>
 
       {postsToDisplay.length > page * POSTS_PER_PAGE && (
         <Button text="Load More" onClick={incrementPage} />

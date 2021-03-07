@@ -159,6 +159,10 @@
 }
 
 @media (min-width: 800px) {
+  .detailsContent h1 {
+    text-align: center;
+  }
+
   .detailsContent h1::after {
     left: 50%;
     transform: translateX(-50%);
