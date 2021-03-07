@@ -14,7 +14,7 @@
   align-items: center;
 
   flex: 1;
-  padding: 40px 20px;
+  padding: 40px 20px 0;
   max-width: 600px;
 }
 
@@ -105,7 +105,7 @@
   justify-content: space-between;
   width: 100%;
   max-width: 600px;
-  padding: 0 20px 20px;
+  padding: 20px;
 }
 
 .detailsContainer footer a {
@@ -156,4 +156,15 @@
 .detailsContainer footer :first-child:hover img {
   opacity: 1;
   transform: translateX(-30px);
+}
+
+@media (min-width: 800px) {
+  .detailsContent h1::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .detailsContent span {
+    align-self: center;
+  }
 }
