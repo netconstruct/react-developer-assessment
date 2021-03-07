@@ -45,3 +45,8 @@
 .tag.active :last-child {
   opacity: 1;
 }
+
+.tag.small {
+  font-size: 14px !important;
+  padding: 10px 12px;
+}

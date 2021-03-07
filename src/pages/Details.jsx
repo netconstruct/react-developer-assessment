@@ -1,16 +1,54 @@
 import React, { useContext } from 'react';
-import { PostContext } from '../contexts/PostsContext';
+import { Link } from 'react-router-dom';
+
 import styles from '../styles/pages/Details.module.css';
+import { PostContext } from '../contexts/PostsContext';
+import { format } from 'date-fns';
+
+import Tag from '../components/Tag';
+
+import ArrowLeft from '../assets/images/arrow_left.svg';
+import ArrowRight from '../assets/images/arrow_right.svg';
 
 function Details({ postId }) {
   const { postsToDisplay } = useContext(PostContext);
-
   const post = postsToDisplay.find((p) => p.id === postId);
+  const formattedDate = format(new Date(post.publishDate), 'MMMM dd, yyyy');
 
   return (
-    <main className={styles.detailsContainer}>
-      <h1>{post.title}</h1>
-    </main>
+    <div className={styles.detailsContainer}>
+      <main className={styles.detailsContent}>
+        <h1>{post.title}</h1>
+        <span>{formattedDate}</span>
+        <p>{post.summary}</p>
+        <ul>
+          {post.categories.map((category) => (
+            <Tag
+              key={category.id}
+              isActive={true}
+              text={category.name}
+              isSmall
+            />
+          ))}
+        </ul>
+
+        <div className={styles.separator} />
+
+        <img src={post.author.avatar} alt="Author Avatar" />
+        <span className={styles.authorName}>{post.author.name}</span>
+      </main>
+
+      <footer>
+        <Link to="/">
+          Go Back
+          <img src={ArrowLeft} alt="" />
+        </Link>
+        <Link to="/">
+          Next Article
+          <img src={ArrowRight} alt="" />
+        </Link>
+      </footer>
+    </div>
   );
 }
 
