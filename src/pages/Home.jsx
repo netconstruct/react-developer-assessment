@@ -8,6 +8,7 @@ import styles from '../styles/pages/Home.module.css';
 import Tag from '../components/Tag';
 import Card from '../components/Card';
 import Button from '../components/Button';
+import { pageTransition } from '../assets/utils/animationVariants';
 
 function Home() {
   const {
@@ -21,18 +22,12 @@ function Home() {
     POSTS_PER_PAGE,
   } = useContext(PostContext);
 
-  const animationVariants = {
-    initial: { opacity: 0, x: -100 },
-    open: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -100 },
-  };
-
   return (
     <motion.main
       initial="initial"
       animate="open"
       exit="exit"
-      variants={animationVariants}
+      variants={pageTransition}
       className={styles.homeContainer}
     >
       <h1>Categories</h1>

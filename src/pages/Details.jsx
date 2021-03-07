@@ -10,6 +10,7 @@ import Tag from '../components/Tag';
 
 import ArrowLeft from '../assets/images/arrow_left.svg';
 import ArrowRight from '../assets/images/arrow_right.svg';
+import { pageTransition } from '../assets/utils/animationVariants';
 
 function Details({ postId }) {
   const { postsToDisplay } = useContext(PostContext);
@@ -22,18 +23,12 @@ function Details({ postId }) {
 
   const formattedDate = format(new Date(post.publishDate), 'MMMM dd, yyyy');
 
-  const animationVariants = {
-    initial: { opacity: 0, x: -100 },
-    open: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -100 },
-  };
-
   return (
     <motion.div
       initial="initial"
       animate="open"
       exit="exit"
-      variants={animationVariants}
+      variants={pageTransition}
       className={styles.detailsContainer}
     >
       <main className={styles.detailsContent}>

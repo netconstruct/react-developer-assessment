@@ -1,38 +1,25 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import styles from '../styles/components/App.module.css';
 import { ContextProvider } from '../contexts/PostsContext';
 
 import Navbar from './Navbar';
-import Home from '../pages/Home';
-import Details from '../pages/Details';
 import Footer from './Footer';
-import { AnimatePresence } from 'framer-motion';
+import Routes from './Routes';
 
 function App() {
   return (
-    <AnimatePresence exitBeforeEnter>
-      <div className={styles.appContainer}>
-        <Navbar />
+    <div className={styles.appContainer}>
+      <Navbar />
 
-        <ContextProvider>
-          <Router>
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route
-                exact
-                path="/details/:id"
-                render={(routeProps) => (
-                  <Details postId={routeProps.match.params.id} />
-                )}
-              />
-            </Switch>
-          </Router>
-        </ContextProvider>
+      <ContextProvider>
+        <Router>
+          <Routes />
+        </Router>
+      </ContextProvider>
 
-        <Footer />
-      </div>
-    </AnimatePresence>
+      <Footer />
+    </div>
   );
 }
 
