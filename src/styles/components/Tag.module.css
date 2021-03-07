@@ -49,4 +49,5 @@
 .tag.small {
   font-size: 14px !important;
   padding: 10px 12px;
+  cursor: default;
 }

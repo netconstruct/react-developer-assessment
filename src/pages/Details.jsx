@@ -13,6 +13,12 @@ import ArrowRight from '../assets/images/arrow_right.svg';
 function Details({ postId }) {
   const { postsToDisplay } = useContext(PostContext);
   const post = postsToDisplay.find((p) => p.id === postId);
+  const postIndex = postsToDisplay.findIndex((p) => p.id === postId);
+  const nextPostId =
+    postIndex < postsToDisplay.length + 1
+      ? postsToDisplay[postIndex + 1].id
+      : postsToDisplay[0].id;
+
   const formattedDate = format(new Date(post.publishDate), 'MMMM dd, yyyy');
 
   return (
@@ -43,7 +49,7 @@ function Details({ postId }) {
           Go Back
           <img src={ArrowLeft} alt="" />
         </Link>
-        <Link to="/">
+        <Link to={`/details/${nextPostId}`}>
           Next Article
           <img src={ArrowRight} alt="" />
         </Link>
