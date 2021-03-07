@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from '../styles/pages/NotFound.module.scss';
 
 import Img from '../assets/images/NotFound.png';

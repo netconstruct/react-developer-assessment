@@ -6,7 +6,7 @@ interface TagI {
   text: string;
   isActive: boolean;
   isSmall?: boolean;
-  onClick: (arg0: any) => void;
+  onClick?: (arg0: any) => void;
 }
 
 function Tag({ text, isActive, isSmall, onClick }: TagI) {

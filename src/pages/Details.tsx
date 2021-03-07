@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -12,8 +12,13 @@ import ArrowLeft from '../assets/images/arrow_left.svg';
 import ArrowRight from '../assets/images/arrow_right.svg';
 import { pageTransition } from '../assets/utils/animationVariants';
 
-function Details({ postId }) {
+interface DetailsI {
+  postId: string;
+}
+
+function Details({ postId }: DetailsI) {
   const { postsToDisplay } = useContext(PostContext);
+
   const post = postsToDisplay.find((p) => p.id === postId);
   const postIndex = postsToDisplay.findIndex((p) => p.id === postId);
   const nextPostId =
@@ -21,7 +26,8 @@ function Details({ postId }) {
       ? postsToDisplay[postIndex + 1].id
       : postsToDisplay[0].id;
 
-  const formattedDate = format(new Date(post.publishDate), 'MMMM dd, yyyy');
+  const formattedDate =
+    post && format(new Date(post.publishDate), 'MMMM dd, yyyy');
 
   return (
     <motion.div
@@ -32,24 +38,28 @@ function Details({ postId }) {
       className={styles.detailsContainer}
     >
       <main className={styles.detailsContent}>
-        <h1>{post.title}</h1>
-        <span>{formattedDate}</span>
-        <p>{post.summary}</p>
-        <ul>
-          {post.categories.map((category) => (
-            <Tag
-              key={category.id}
-              isActive={true}
-              text={category.name}
-              isSmall
-            />
-          ))}
-        </ul>
+        {post && (
+          <>
+            <h1>{post.title}</h1>
+            <span>{formattedDate}</span>
+            <p>{post.summary}</p>
+            <ul>
+              {post.categories.map((category) => (
+                <Tag
+                  key={category.id}
+                  isActive={true}
+                  text={category.name}
+                  isSmall
+                />
+              ))}
+            </ul>
 
-        <div className={styles.separator} />
+            <div className={styles.separator} />
 
-        <img src={post.author.avatar} alt="Author Avatar" />
-        <span className={styles.authorName}>{post.author.name}</span>
+            <img src={post.author.avatar} alt="Author Avatar" />
+            <span className={styles.authorName}>{post.author.name}</span>
+          </>
+        )}
       </main>
 
       <footer>

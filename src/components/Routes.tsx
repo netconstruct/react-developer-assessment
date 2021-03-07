@@ -1,6 +1,6 @@
 import { AnimatePresence } from 'framer-motion';
-import React from 'react';
 import { Route, Switch, useLocation } from 'react-router';
+
 import Details from '../pages/Details';
 import Home from '../pages/Home';
 import NotFound from '../pages/NotFound';

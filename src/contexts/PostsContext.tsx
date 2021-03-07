@@ -1,18 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import { useQueryState } from 'react-router-use-location-state';
 
-interface PostsContextDataI {
-  appStatus: string;
-  totalNumberOfPosts: number;
-  postsToDisplay: any;
-  page: number;
-  incrementPage: () => void;
-  categories: any;
-  activeCategories: any;
-  toggleCategory: (arg0: string) => any;
-  POSTS_PER_PAGE: number;
-}
-
 interface ContextProviderI {
   children: ReactNode;
 }
@@ -32,6 +20,18 @@ export interface PostI {
 interface CategoryI {
   id: string;
   name: string;
+}
+
+interface PostsContextDataI {
+  appStatus: string;
+  totalNumberOfPosts: number;
+  postsToDisplay: PostI[];
+  page: number;
+  incrementPage: () => void;
+  categories: string[];
+  activeCategories: string[];
+  toggleCategory: (arg0: string) => any;
+  POSTS_PER_PAGE: number;
 }
 
 export const PostContext = createContext({} as PostsContextDataI);
