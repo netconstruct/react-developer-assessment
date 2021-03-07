@@ -1,9 +1,20 @@
-import React from 'react';
 import { format } from 'date-fns';
 
 import styles from '../styles/components/Card.module.scss';
 
-function Card({ post }) {
+interface CardI {
+  post: {
+    title: string;
+    summary: string;
+    publishDate: string;
+    author: {
+      name: string;
+      avatar: string;
+    };
+  };
+}
+
+function Card({ post }: CardI) {
   const { title, summary, publishDate, author } = post;
   const formattedDate = format(new Date(publishDate), 'MMMM dd, yyyy');
 

@@ -2,7 +2,14 @@ import React from 'react';
 
 import styles from '../styles/components/Tag.module.scss';
 
-function Tag({ text, isActive, isSmall, onClick }) {
+interface TagI {
+  text: string;
+  isActive: boolean;
+  isSmall?: boolean;
+  onClick: (arg0: any) => void;
+}
+
+function Tag({ text, isActive, isSmall, onClick }: TagI) {
   return (
     <button
       onClick={onClick}
