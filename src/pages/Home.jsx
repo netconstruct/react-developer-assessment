@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -13,9 +13,11 @@ import {
   item,
   pageTransition,
 } from '../assets/utils/animationVariants';
+import Loading from '../components/Loading';
 
 function Home() {
   const {
+    appStatus,
     totalNumberOfPosts,
     postsToDisplay,
     page,
@@ -25,6 +27,12 @@ function Home() {
     toggleCategory,
     POSTS_PER_PAGE,
   } = useContext(PostContext);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (appStatus === 'DONE') setIsLoading(false);
+  }, [appStatus]);
 
   return (
     <motion.main
@@ -41,17 +49,21 @@ function Home() {
         animate="show"
         className={styles.categoriesContainer}
       >
-        {categories.map((category) => {
-          return (
-            <motion.li variants={item} key={category}>
-              <Tag
-                isActive={activeCategories.includes(category)}
-                text={category}
-                onClick={() => toggleCategory(category)}
-              />
-            </motion.li>
-          );
-        })}
+        {isLoading ? (
+          <Loading />
+        ) : (
+          categories.map((category) => {
+            return (
+              <motion.li variants={item} key={category}>
+                <Tag
+                  isActive={activeCategories.includes(category)}
+                  text={category}
+                  onClick={() => toggleCategory(category)}
+                />
+              </motion.li>
+            );
+          })
+        )}
       </motion.ul>
 
       <h1>
@@ -65,17 +77,21 @@ function Home() {
           exit="hidden"
           className={styles.postsContainer}
         >
-          {postsToDisplay.map((post, index) => {
-            if (index + 1 > page * POSTS_PER_PAGE) return null;
+          {isLoading ? (
+            <Loading />
+          ) : (
+            postsToDisplay.map((post, index) => {
+              if (index + 1 > page * POSTS_PER_PAGE) return null;
 
-            return (
-              <motion.li variants={item} key={post?.id}>
-                <Link to={`/details/${post?.id}`}>
-                  <Card post={post} />
-                </Link>
-              </motion.li>
-            );
-          })}
+              return (
+                <motion.li variants={item} key={post?.id}>
+                  <Link to={`/details/${post?.id}`}>
+                    <Card post={post} />
+                  </Link>
+                </motion.li>
+              );
+            })
+          )}
         </motion.ul>
       </AnimatePresence>
 

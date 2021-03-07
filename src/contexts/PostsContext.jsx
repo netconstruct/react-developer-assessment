@@ -10,6 +10,7 @@ export function ContextProvider({ children }) {
   const [page, setPage] = useState(1);
   const [categories, setCategories] = useState([]);
   const [activeCategories, setActiveCategories] = useState([]);
+  const [appStatus, setAppStatus] = useState('LOADING');
 
   const POSTS_PER_PAGE = 8;
 
@@ -59,7 +60,11 @@ export function ContextProvider({ children }) {
     fetch('/api/posts')
       .then((response) => response.json())
       .then((res) => setPosts(res.posts))
-      .catch((e) => alert(e));
+      .then(() => setAppStatus('DONE'))
+      .catch((e) => {
+        setAppStatus('ERROR');
+        alert(e);
+      });
   }, []);
 
   // Maps through all data and get every available category
@@ -96,6 +101,7 @@ export function ContextProvider({ children }) {
   return (
     <PostContext.Provider
       value={{
+        appStatus,
         totalNumberOfPosts: posts.length,
         postsToDisplay,
         page,
