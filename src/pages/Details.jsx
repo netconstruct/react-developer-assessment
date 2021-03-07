@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-import styles from '../styles/pages/Details.module.css';
+import styles from '../styles/pages/Details.module.scss';
 import { PostContext } from '../contexts/PostsContext';
 import { format } from 'date-fns';
 
