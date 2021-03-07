@@ -3,6 +3,7 @@ import React from 'react';
 import { Route, Switch, useLocation } from 'react-router';
 import Details from '../pages/Details';
 import Home from '../pages/Home';
+import NotFound from '../pages/NotFound';
 
 function Routes() {
   const location = useLocation();
@@ -18,6 +19,7 @@ function Routes() {
             <Details postId={routeProps.match.params.id} />
           )}
         />
+        <Route component={NotFound} />
       </Switch>
     </AnimatePresence>
   );
