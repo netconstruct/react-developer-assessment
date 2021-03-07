@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 import styles from '../styles/pages/Details.module.css';
 import { PostContext } from '../contexts/PostsContext';
@@ -21,8 +22,20 @@ function Details({ postId }) {
 
   const formattedDate = format(new Date(post.publishDate), 'MMMM dd, yyyy');
 
+  const animationVariants = {
+    initial: { opacity: 0, x: -100 },
+    open: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -100 },
+  };
+
   return (
-    <div className={styles.detailsContainer}>
+    <motion.div
+      initial="initial"
+      animate="open"
+      exit="exit"
+      variants={animationVariants}
+      className={styles.detailsContainer}
+    >
       <main className={styles.detailsContent}>
         <h1>{post.title}</h1>
         <span>{formattedDate}</span>
@@ -54,7 +67,7 @@ function Details({ postId }) {
           <img src={ArrowRight} alt="" />
         </Link>
       </footer>
-    </div>
+    </motion.div>
   );
 }
 

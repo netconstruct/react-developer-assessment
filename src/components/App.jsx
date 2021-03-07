@@ -7,30 +7,32 @@ import Navbar from './Navbar';
 import Home from '../pages/Home';
 import Details from '../pages/Details';
 import Footer from './Footer';
+import { AnimatePresence } from 'framer-motion';
 
 function App() {
   return (
-    <div className={styles.appContainer}>
-      <Navbar />
+    <AnimatePresence exitBeforeEnter>
+      <div className={styles.appContainer}>
+        <Navbar />
 
-      <ContextProvider>
-        <Router>
-          <Switch>
-            <Route exact path="/" component={Home} />
+        <ContextProvider>
+          <Router>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route
+                exact
+                path="/details/:id"
+                render={(routeProps) => (
+                  <Details postId={routeProps.match.params.id} />
+                )}
+              />
+            </Switch>
+          </Router>
+        </ContextProvider>
 
-            <Route
-              exact
-              path="/details/:id"
-              render={(routeProps) => (
-                <Details postId={routeProps.match.params.id} />
-              )}
-            />
-          </Switch>
-        </Router>
-      </ContextProvider>
-
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </AnimatePresence>
   );
 }
 
