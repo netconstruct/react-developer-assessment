@@ -4,12 +4,14 @@ import { IPost } from "../utils/IPost";
 import React from "react";
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { grey } from "@material-ui/core/colors";
+import { PostsFilter } from "./filter/PostsFilter";
 
 const useStyles = makeStyles(() =>
   createStyles({
     root: {
       display: 'flex',
-      backgroundColor: grey[50],
+      backgroundColor: grey[100],
+      flexWrap: 'wrap',
     },
   }),
 );
@@ -30,6 +32,7 @@ const App = () => {
 
   return (
     <main className={classes.root}>
+      <PostsFilter posts={posts} />
       <Posts posts={posts} />
     </main>
   );

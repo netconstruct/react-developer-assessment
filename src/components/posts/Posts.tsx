@@ -9,6 +9,9 @@ const useStyles = makeStyles(() =>
         gridItemStyle: {
             display: 'flex',
         },
+        postsStyle: {
+            margin: '0px 10px 10px 10px',
+        },
     }),
 );
 interface IPostsProps {
@@ -18,8 +21,9 @@ interface IPostsProps {
 export const Posts = ({ posts }: IPostsProps) => {
     const classes = useStyles();
     const myposts = posts ? [...posts] : [];
+
     return (
-        <Grid container spacing={3}>
+        <Grid container spacing={3} className={classes.postsStyle}>
             {
                 myposts.map((post: IPost, postIndex: number) => {
                     return (
