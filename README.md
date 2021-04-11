@@ -1,6 +1,6 @@
-# NetConstruct React Developer Assessment
+# Simona's NetConstruct React Developer Assessment
 
-## Overview
+### Overview
 
 The purpose of this assessment is to demonstrate:
 
@@ -11,7 +11,7 @@ The purpose of this assessment is to demonstrate:
 5. HTML and CSS ability
 6. Responsive web development ability
 
-## Third party libraries:
+### Used third party libraries:
 - Material UI 
 
 ### Requirements
