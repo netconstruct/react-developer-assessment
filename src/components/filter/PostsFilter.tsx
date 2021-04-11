@@ -1,5 +1,5 @@
 import { Card, CardContent, Chip, Grid, Typography } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { IPost } from "../../utils/IPost";
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { ICategory } from "../../utils/ICategory";
