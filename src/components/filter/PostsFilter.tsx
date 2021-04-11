@@ -1,5 +1,5 @@
 import { Card, CardContent, Chip, Grid, Typography } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import { IPost } from "../../utils/IPost";
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { ICategory } from "../../utils/ICategory";
@@ -21,6 +21,7 @@ interface IPostsFilterProps {
 
 export const PostsFilter = ({ posts }: IPostsFilterProps) => {
     const classes = useStyles();
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
     // get all categories
     const categories: ICategory[] = posts.map(post => post.categories).flat();
@@ -36,11 +37,28 @@ export const PostsFilter = ({ posts }: IPostsFilterProps) => {
                 <Grid container spacing={1}>
                     {
                         uniqueCategoryNames.map((uniqueCategoryName: string, uniqueCategoryNameIndex: number) => {
+                            // get the index of the unique category name in the selectedCategories array
+                            const selectedCategoryNameIndex = selectedCategories.findIndex(selectedCategory => selectedCategory === uniqueCategoryName);
                             return (
                                 <Grid item xs={12} sm={6} md={2} lg={2} key={uniqueCategoryNameIndex}>
                                     <Chip
                                         label={uniqueCategoryName}
-                                        variant="outlined"
+                                        // change the variant type, depending on whether uniqueCategoryName is in selectedCategories or not
+                                        variant={selectedCategoryNameIndex !== -1 ? "default" : "outlined"}
+                                        onClick={() => {
+                                            //if the unique category name is already in selectedCategories
+                                            if (selectedCategoryNameIndex !== -1) {
+                                                // remove the category from selectedCategories
+                                                const copyOfSelectedCategories: string[] = [...selectedCategories];
+                                                copyOfSelectedCategories.splice(selectedCategoryNameIndex, 1);
+                                                setSelectedCategories(copyOfSelectedCategories);
+                                            } else {
+                                                // add the unique category to selectedCategories
+                                                const copyOfSelectedCategories: string[] = [...selectedCategories];
+                                                copyOfSelectedCategories.push(uniqueCategoryName)
+                                                setSelectedCategories(copyOfSelectedCategories);
+                                            }
+                                        }}
                                     />
                                 </Grid>
                             )
