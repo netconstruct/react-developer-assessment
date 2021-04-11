@@ -3,7 +3,7 @@ import React from "react";
 import { IPost } from "../../utils/IPost";
 import { PostCard } from "./PostCard";
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { Button } from "@material-ui/core";
+import { Button, Fab } from "@material-ui/core";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -43,12 +43,17 @@ export const Posts = ({ posts, loadMorePosts, showMore }: IPostsProps) => {
             }
 
             {
-                showMore &&
-                <Grid item xs={12} sm={12} md={12} className={classes.loadMoreBtnStyle}>
-                    <Button variant="outlined" color="primary" onClick={loadMorePosts}>
-                        Load More
-                    </Button>
-                </Grid>
+                showMore ?
+                    <Grid item xs={12} sm={12} md={12} className={classes.loadMoreBtnStyle}>
+                        <Button variant="outlined" color="primary" onClick={loadMorePosts}>
+                            Load More
+                        </Button>
+                    </Grid> :
+                    <Grid item xs={12} sm={12} md={12} className={classes.loadMoreBtnStyle}>
+                        <Fab variant="extended" color="secondary" aria-label="scroll-to-top" onClick={() => window.scrollTo(0, 0)}>
+                            Scroll to the top
+                        </Fab>
+                    </Grid>
             }
         </Grid>
     );
