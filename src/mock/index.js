@@ -10,5 +10,5 @@ createServer({
     this.get('/posts', () => {
       return data;
     });
-  },
+  }
 });

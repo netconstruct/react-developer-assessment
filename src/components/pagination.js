@@ -36,6 +36,7 @@ export const usePagination = (data = []) => {
       });
     };
 
+    // should have had some styling on selected
     return totalNumberOfItems > 0 ? (
       <div className="pagination">
         { _.times(page.totalPages, (pageNumber) =>
