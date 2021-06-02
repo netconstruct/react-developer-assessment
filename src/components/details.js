@@ -12,14 +12,12 @@ export const Details = ({ match: { url } }) => {
   const selectedPost = React.useMemo(() => _.find(data, ['id', postId]), [data, postId]);
 
   return React.useMemo(() => (
-    <>
-      <div className="post__details">
-        <img src={_.get(selectedPost, 'author.avatar')} alt={_.get(selectedPost, 'author.name')} />
-        <h3>{_.get(selectedPost, 'author.name')}</h3>
-        <p>{_.get(selectedPost, 'title')}</p>
-        <p>Published: {moment.utc(_.get(selectedPost, 'publishDate')).format('MMMM D YYYY')}</p>
-        <p>{_.get(selectedPost, 'summary')}</p>
-      </div>
-    </>
+    <div className="post__details">
+      <img src={_.get(selectedPost, 'author.avatar')} alt={_.get(selectedPost, 'author.name')} />
+      <h3>{_.get(selectedPost, 'author.name')}</h3>
+      <p>{_.get(selectedPost, 'title')}</p>
+      <p>Published: {moment.utc(_.get(selectedPost, 'publishDate')).format('MMMM D YYYY')}</p>
+      <p>{_.get(selectedPost, 'summary')}</p>
+    </div>
   ), [selectedPost]);
 };
