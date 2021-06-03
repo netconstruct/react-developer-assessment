@@ -12,11 +12,11 @@ import './mock';
 import './styles/index.css';
 
 // Include application component.
-import App from './components/App';
+import { AppWithBrowserRouter } from './components/index.js';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AppWithBrowserRouter />
   </React.StrictMode>,
   document.getElementById('root')
 );
