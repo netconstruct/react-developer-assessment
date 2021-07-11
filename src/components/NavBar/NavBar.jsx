@@ -2,8 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 function NavBar() {
- 
-  
   return (
     <Nav>
       <h1>NetConstruct</h1>

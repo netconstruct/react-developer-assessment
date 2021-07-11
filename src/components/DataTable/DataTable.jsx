@@ -22,7 +22,7 @@ function DataTable({ data }) {
           return (
             <tr>
               <td>
-              {/* TODO: DETAIL TAB */}
+              {/* Link to as Object to allow post data to be passed as State via props.location.state */}
               <Link
                 to={{
                   pathname: `/${post.id}`,

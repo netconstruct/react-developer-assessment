@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { useLocation, useHistory } from 'react-router-dom'
 
@@ -6,8 +6,12 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 function Detail(props) {
 
+  // useHistory hook to allow .goBack() on return button in page
+  // useLocation hook to allow props to be passed via react-router
+
   const history = useHistory();
   const location = useLocation();
+  // Destructor details from props.location.state
   const { details } = location.state;
 
   console.log(details)
@@ -30,6 +34,7 @@ function Detail(props) {
         </ul>
       </CategoriesContainer>
     </PostWrapper>
+    {/* Added a go back button as an additional CTA */}
     <BackButton onClick={() => history.goBack()}>
         <ArrowBackIosIcon/>
         Go Back

@@ -1,29 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import { useLocationState, useQueryState } from 'react-router-use-location-state'
+
 import DataTable from '../DataTable/DataTable';
 
 
 function Hero() {
 // State variables for API data, Search Query (Text based), Filter Query (checkbox), Pagination and all categories from API data
+// useLocationState to persist state of Pagination through screen transitions // Does not show in URL query params
+// useQueryState to persist data in the query string // Does show in URL query params
   const [posts, setPosts] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [filterQuery, setFilterQuery] = useState([]);
-  const [results, setResults] = useState(10);
+  const [filterQuery, setFilterQuery] = useQueryState("Filter", []);
+  const [results, setResults] = useLocationState("results", 10);
   const [categories, setCategories] = useState([]);
 
+  // useEffect to retrieve API data on page load
   useEffect(() => {
     fetch('api/posts')
       .then((res) => res.json())
       .then((data) => {
         const { posts } = data;
+        // Set API data in state
         setPosts(posts);
+        // Call function to get unique Categories from API data
         setCategories(getUniqueCategories(posts));
       });
   }, []);
 
   // Function to search based on text type
   const search = (data) => {
+    // Filter the data based on whether the search term (searchQuery) exists in the category object of each post.
       return data.filter((post) => {
         for (let i = 0; i < post.categories.length; i++) {
           if (post.categories[i].name.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1) return true
@@ -36,12 +44,14 @@ function Hero() {
     const getUniqueCategories = (data) => {
       let categoriesArray = []
       
+      // Loop through each Category object and push into array
       for(let i = 0; i < data.length; i++) {
         for(let j = 0; j < data[i].categories.length; j++) {
           categoriesArray.push(data[i].categories[j].name)
         }
       }
     
+      // Filter category array and return only unique categories
       let uniqueCategoriesArray = categoriesArray.filter((item, index, self) => {
         return (
           self.indexOf(item) === index
@@ -53,10 +63,11 @@ function Hero() {
 
     // Function to filter based on categories
     const filter = (data) => {
-
+      // If filterQuery is empty (i.e. no categories yet selected) return the data that was passed in
       if (filterQuery.length < 1) {
         return data
       } else {
+        // Loop through each posts category object and return true where matches a category from the filterQuery array state
       return data.filter((post) => {
         for (let i = 0; i < post.categories.length; i++) {
           if (filterQuery.includes(post.categories[i].name)) return true
@@ -69,8 +80,11 @@ function Hero() {
     // Function to change Filter Query
     const handleFilter = (e) => {
       let category = e.target.name;
+      
+      // Check whether the category selected already exists in the filterQuery array state
       let categoryIndex = filterQuery.indexOf(category);
       
+      // If the category already exists within the filterQuery array, remove it (via filter method), otherwise add to the filterQuery
       if (categoryIndex < 0) {
         setFilterQuery([...filterQuery, category])
       } else {
@@ -108,13 +122,16 @@ function Hero() {
           </Search>
           <Filter>
           Filter:  
+          {/* Map unique categories array state to inputs to be used for filter selection */}
           {categories.map((cat, index) => {
             return (
-              <label>
+              <label for={cat}>
                 <input 
                   key={index}
+                  id={cat}
                   name={cat}
                   type="checkbox"
+                  // apply checked flag depending on whether the category is in the filterQuery array state
                   checked={filterQuery.indexOf(cat) > -1}
                   onChange={handleFilter}
                   />
@@ -125,6 +142,7 @@ function Hero() {
           </Filter>
         </div>
       </FilterContainer>
+      {/* Pass searched and filtered API data to Datatable Component, slicing the data based on Pagination value (results State) */}
       <DataTable data={search(filter(posts)).slice(0, results)} />
       <Pagination>
         <p>Showing {search(filter(posts)).slice(0, results).length} of {search(filter(posts)).length}</p>
@@ -160,6 +178,7 @@ const Wrapper = styled.main`
   height: fit-content;
   margin: 10px 0;
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   
   
@@ -176,6 +195,10 @@ const Wrapper = styled.main`
     display: flex;
     align-items: center;
 
+    input {
+      margin-right: 5px;
+    }
+
     @media only screen and (max-width: 768px) {
       font-size: 10px;
       padding: 2px 4px;
@@ -191,9 +214,6 @@ const Wrapper = styled.main`
       background-color: #D5D5D5;
     }
     
-    &input[type=checkbox]:checked {
-      background-color: #D5D5D5;
-    }
   }
   `;
 
