@@ -217,7 +217,7 @@ const Wrapper = styled.main`
   }
   `;
 
-  const Pagination = styled.div`
+const Pagination = styled.div`
   width: 100%;
   min-height: 50px;
   margin: 25px 0;
@@ -225,6 +225,19 @@ const Wrapper = styled.main`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  button {
+    font-size: 12px;
+    padding: 4px 8px;
+    margin: 4px;
+    background-color: #F5F5F5;
+    border: 1px solid #D5D5D5;
+    border-radius: 8px;
+
+    &:hover {
+      background-color: #D5D5D5;
+    }
+  }
   `;
 
 export default Hero;
