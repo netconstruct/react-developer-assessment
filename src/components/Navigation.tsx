@@ -3,6 +3,7 @@ import {
   useLocation
 } from "react-router-dom";
  
+import Box from "../components/Box";
  
 import { StyledNavigationItem, StyledNavigation } from '../styled'
 
@@ -21,7 +22,7 @@ function NavigationItem({children, to = "/", selected = false}: NavigationItemPr
 }
 
 
-type NanigationItemsType = Array<{title: any, path: any}>
+type NanigationItemsType = Array<{title: any, path: any, count?: number}>
 interface Props {
   navigationItems: NanigationItemsType;
 }
@@ -31,9 +32,10 @@ function Navigation({navigationItems}: Props) {
 
   return (
   <StyledNavigation>
-    {navigationItems.map(({title, path}: any) => (
+    {navigationItems.map(({title, path, count}: any) => (
       <NavigationItem key={path} to={path} selected={pathname === path}>
-        {title}
+        <Box>{title}</Box>
+        {count && <Box borderRadius="15px" p="2px" bg="#2196f3" color="white">{count }</Box>}
       </NavigationItem>
     ))}
   </StyledNavigation>

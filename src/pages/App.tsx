@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect }  from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,23 +12,32 @@ import Home from './Home';
 import About from './About';
 
 
-function App() {
+const App = () => {
+  const [posts, setPosts] = useState([]);
  
- 
+  useEffect(() => {
+    fetch("/api/posts").then(res => res.json()).then<any>(res=>setPosts(res.posts));
 
+    //unmount
+    return ()=>{
+
+    }
+  }, [])
+
+  console.log("posts", posts)
   return (
     <Router>
     <div>
       <Box as="nav" display="flex" flexDirection="row" justifyContent="space-between" alignItems="center" px="3px">
       <Box fontSize="3" fontWeight="bold">NetContruct</Box>
-      <Navigation navigationItems={[{title: "Home", path:"/"}, {title: "About", path:"/about"}]}/>
+      <Navigation navigationItems={[{title: "Home", path:"/", count: posts.length}, {title: "About", path:"/about"}]}/>
       </Box>
 
 
       <hr />
       <Switch>
         <Route exact path="/">
-          <Home />
+          <Home posts={posts}/>
         </Route>
         <Route path="/about">
           <About />
