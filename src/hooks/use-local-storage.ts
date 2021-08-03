@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 //https://web.dev/cache-api-quick-guide/
-export const useLocalStorage = (key: string, initialValue: any): any => {
+export const useLocalStorage = (key: any, initialValue: any): any => {
   const [storedValue, setStoredValue] = useState(() => {
     try {
       const item = window.localStorage.getItem(key);
