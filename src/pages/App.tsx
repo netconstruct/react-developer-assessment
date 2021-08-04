@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { HashRouter, Switch, Route } from 'react-router-dom';
 import Box from '../components/Box';
 import Navigation from '../components/Navigation';
 
@@ -20,8 +20,7 @@ const App = () => {
 
   console.log('posts', posts);
   return (
-    <Router>
-      <div>
+    <HashRouter basename={process.env.PUBLIC_URL}>
         <Box
           as="nav"
           display="flex"
@@ -42,16 +41,19 @@ const App = () => {
             NetContruct
           </Box>
         </Box>
-        <Switch>
-          <Route exact path="/">
-            <Home posts={posts} />
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+        <Route
+          render={({ location }) => (
+            <Switch location={location}>
+              <Route exact path="/">
+                <Home posts={posts} />
+              </Route>
+              <Route path="/about">
+                <About />
+              </Route>
+            </Switch>
+          )}
+        />
+    </HashRouter>
   );
 };
 

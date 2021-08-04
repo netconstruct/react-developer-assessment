@@ -1,6 +1,7 @@
 {
   "name": "developer-test",
   "version": "0.1.0",
+  "homepage": "react-developer-assessment",
   "private": true,
   "dependencies": {
     "react": "^17.0.1",
@@ -16,7 +17,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -37,10 +40,6 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.1.8",
-    "@types/styled-components": "^5.1.11",
-    "@types/styled-system": "^5.1.12",
-    "miragejs": "^0.1.41",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -48,6 +47,11 @@
     "@types/node": "^16.4.10",
     "@types/react": "^17.0.15",
     "@types/react-dom": "^17.0.9",
-    "antd": "^4.16.10"
+    "@types/react-router-dom": "^5.1.8",
+    "@types/styled-components": "^5.1.11",
+    "@types/styled-system": "^5.1.12",
+    "antd": "^4.16.10",
+    "gh-pages": "^3.2.3",
+    "miragejs": "^0.1.41"
   }
 }
