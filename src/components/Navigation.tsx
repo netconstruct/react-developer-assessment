@@ -35,7 +35,7 @@ function Navigation({navigationItems}: Props) {
     {navigationItems.map(({title, path, count}: any) => (
       <NavigationItem key={path} to={path} selected={pathname === path}>
         <Box>{title}</Box>
-        {count && <Box borderRadius="15px" p="2px" bg="#2196f3" color="white">{count }</Box>}
+        {count && <Box borderRadius="15px" bg="#2196f3" color="white" size="25px" textAlign="center">{count }</Box>}
       </NavigationItem>
     ))}
   </StyledNavigation>

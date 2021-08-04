@@ -59,7 +59,7 @@ const Pagination = ({
       </Box>
       {paginationRange.map((pageNumber) => {
         if (pageNumber === DOTS) {
-          return <li className="pagination-item dots">&#8230;</li>;
+          return <Box key={pageNumber}>&#8230;</Box>;
         }
 
         return (
@@ -71,6 +71,7 @@ const Pagination = ({
             minWidth="30px"
             borderRadius="2px"
             textAlign="center"
+            key={pageNumber}
             {...(pageNumber === currentPage ? { borderColor: 'red' } : {})}
           >
             {pageNumber}

@@ -11,31 +11,31 @@ export const StyledButton = styled.button`
   }
 `;
 
-export const StyledNavigation = styled.ul`
+export const StyledNavigation = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 1rem;  
+  gap: 1rem;
 `;
 
 export const StyledNavigationItem = styled(Link)<{$selected: boolean}>`
   text-decoration: none;
+  min-width: 80px;
 
   display: flex;
   flex-direction: row;
-  gap: 2px;
+  justify-content: space-between;
 
   &:hover{
     background-color: #e4e4e4;
   }
-  padding: 2px;
+  padding: 2px 4px;
   border-radius: 2px;
 
   ${p => css`
   ${p.$selected && `
   border-bottom: 2px solid blue;
-  background-color: #e4e4e4;
   `}
   ${!p.$selected && `padding-bottom: 4px;`}
 `}

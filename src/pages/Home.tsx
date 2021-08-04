@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Select, Input } from 'antd';
 import { Typography } from 'antd';
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
 
 import { filterAndSortPosts, getFormatedDate, CategoriesEnum } from './utils';
 import { PostType } from './types';
@@ -12,16 +13,30 @@ const { Option } = Select;
 const { Search } = Input;
 const { Text, Title } = Typography;
 
-const Post = ({ post }: { post: PostType }) => {
+const Post = ({ post, isEven }: { post: PostType; isEven: boolean }) => {
   const date = getFormatedDate(post.publishDate);
+  const props = { bg: isEven ? '#deffff' : undefined, padding: '3px' };
   return (
-    <Box display="flex" flexDirection="row" alignItems="center">
-      <Box as="img" src={post.author.avatar} />
-      <Box title={post.author.name}>{post.author.name}</Box>
-      <Box title={post.title}>{post.title}</Box>
-      <Box title={post.summary}>{post.summary}</Box>
-      <Box title={date}>{date}</Box>
-    </Box>
+    <>
+      <Box
+        as="img"
+        src={post.author.avatar}
+        border={`1px ${isEven ? 'cyan' : 'pink'} solid`}
+        borderRadius="3px"
+      />
+      <Box title={post.author.name} {...props}>
+        {post.author.name}
+      </Box>
+      <Box title={post.title} {...props}>
+        {post.title}
+      </Box>
+      <Box title={post.summary} {...props}>
+        {post.summary}
+      </Box>
+      <Box title={date} {...props}>
+        {date}
+      </Box>
+    </>
   );
 };
 
@@ -31,24 +46,36 @@ interface Props {
 
 const PageSize = 30;
 const Home = ({ posts = [] }: Props) => {
-  // const [items, setItems] = useLocalStorage("dnd-sheet-data", DATA);
   const [sortBy, setSortBy] = useLocalStorage('sortBy', CategoriesEnum.all);
+  const [sortDesc, setSortDesc] = useLocalStorage('sortDesc', false);
   const [query, setQuery] = useLocalStorage('query', '');
   const [currentPage, setCurrentPage] = useLocalStorage('currentPage', 1);
 
   const filteredSortedPosts = useMemo(() => {
+    if (sortDesc) return filterAndSortPosts(posts, sortBy, query).reverse();
     return filterAndSortPosts(posts, sortBy, query);
-  }, [sortBy, query, posts]);
+  }, [sortBy, query, posts, sortDesc]);
+  const firstPageIndex = (currentPage - 1) * PageSize;
+  const lastPageIndex = firstPageIndex + PageSize;
+  const entriesOnPage = filteredSortedPosts.slice(
+    firstPageIndex,
+    lastPageIndex
+  );
 
-  const entriesOnPage = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * PageSize;
-    const lastPageIndex = firstPageIndex + PageSize;
-    return filteredSortedPosts.slice(firstPageIndex, lastPageIndex);
+  console.log(
+    sortBy,
+    query,
+    CategoriesEnum.title,
+    Object.keys(CategoriesEnum),
+    sortDesc
+  );
+  const onSetSortBy = (newState: CategoriesEnum) => {
+    setSortBy((prevState: CategoriesEnum) => {
+      if (prevState === newState) setSortDesc(!sortDesc);
+      return newState;
+    });
+  };
 
-    // return filterAndSortPosts(posts, sortBy, query);
-  }, [filteredSortedPosts, currentPage]);
-
-  console.log(sortBy, query, CategoriesEnum.title, Object.keys(CategoriesEnum));
   return (
     <Box position="relative">
       <Title level={4}>Posts</Title>
@@ -78,7 +105,7 @@ const Home = ({ posts = [] }: Props) => {
                 defaultValue={CategoriesEnum.all}
                 value={sortBy}
                 style={{ width: 120 }}
-                onChange={setSortBy}
+                onChange={onSetSortBy}
               >
                 {Object.keys(CategoriesEnum).map((category) => (
                   <Option value={category} key={`${category}_sortBy`}>
@@ -92,10 +119,48 @@ const Home = ({ posts = [] }: Props) => {
         />
       </Box>
 
-      {/* TODO use a table here, add pagination */}
-      {entriesOnPage.map((post, index) => (
-        <Post post={post} key={`post_${index}`} />
-      ))}
+      <Box
+        display="grid"
+        gridTemplateColumns="55px auto auto auto auto"
+        gridGap="2px"
+        mx={['4px', '8px']}
+      >
+        <Box textAlign="center" onClick={() => setSortDesc(!sortDesc)}>
+          {sortDesc ? <DownOutlined /> : <UpOutlined />}
+        </Box>
+        <Text
+          strong
+          onClick={() => onSetSortBy(CategoriesEnum.author)}
+          underline={sortBy === CategoriesEnum.author}
+        >
+          Author
+        </Text>
+        <Text
+          strong
+          onClick={() => onSetSortBy(CategoriesEnum.title)}
+          underline={sortBy === CategoriesEnum.title}
+        >
+          Title
+        </Text>
+        <Text
+          strong
+          onClick={() => onSetSortBy(CategoriesEnum.summary)}
+          underline={sortBy === CategoriesEnum.summary}
+        >
+          Summary
+        </Text>
+        <Text
+          strong
+          onClick={() => onSetSortBy(CategoriesEnum.date)}
+          underline={sortBy === CategoriesEnum.date}
+        >
+          Date
+        </Text>
+
+        {entriesOnPage.map((post, index) => (
+          <Post post={post} key={`post_${index}`} isEven={index % 2 === 0} />
+        ))}
+      </Box>
     </Box>
   );
 };
