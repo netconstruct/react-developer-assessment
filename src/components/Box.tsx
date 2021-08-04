@@ -31,6 +31,7 @@ export interface Props
   children?: ReactNode;
   as?: string | keyof JSX.IntrinsicElements | React.ComponentType<any>;
   src?: string;
+  href?: string;
   onClick?: () => void;
   title?: string;
 }
@@ -46,8 +47,8 @@ const Box = styled.div<Props>`
   ${border}
 `;
 
-const BoxComponent: FC<Props> = ({ children, ...props }) => {
-  return <Box {...props}>{children}</Box>;
+const BoxComponent: FC<Props> = ({ children, href, ...props }) => {
+  return <Box href={href} {...props}>{children || href}</Box>;
 };
 
 export default BoxComponent;

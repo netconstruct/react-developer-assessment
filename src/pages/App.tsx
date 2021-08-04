@@ -28,8 +28,8 @@ const App = () => {
           flexDirection="row"
           justifyContent="space-between"
           alignItems="center"
-          px={["3px","12px"]}
-          py={["2px","10px"]}
+          px={['3px', '12px']}
+          py={['2px', '10px']}
           borderBottom="1px solid grey"
         >
           <Navigation

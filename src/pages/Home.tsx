@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Select, Input } from 'antd';
 import { Typography } from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
@@ -62,13 +62,6 @@ const Home = ({ posts = [] }: Props) => {
     lastPageIndex
   );
 
-  console.log(
-    sortBy,
-    query,
-    CategoriesEnum.title,
-    Object.keys(CategoriesEnum),
-    sortDesc
-  );
   const onSetSortBy = (newState: CategoriesEnum) => {
     setSortBy((prevState: CategoriesEnum) => {
       if (prevState === newState) setSortDesc(!sortDesc);
