@@ -3,10 +3,12 @@ import styled from 'styled-components';
 import { layout, space, position, flexbox, typography, border, color,
   LayoutProps, PositionProps, FlexboxProps, TypographyProps, SpaceProps, BorderProps, ColorProps } from 'styled-system';
 
-interface Props extends PositionProps, SpaceProps, LayoutProps, FlexboxProps, TypographyProps, BorderProps, ColorProps{
+export interface Props extends PositionProps, SpaceProps, LayoutProps, FlexboxProps, TypographyProps, BorderProps, ColorProps{
   children?: ReactNode;
   as?: string | keyof JSX.IntrinsicElements | React.ComponentType<any>;
   src?: string;
+  onClick?: () => void;
+  title?: string;
 }
 
 const Box = styled.div<Props>`
